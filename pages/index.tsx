@@ -26,7 +26,7 @@ export default function Home() {
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState('');
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
-  const [audioElement, setAudioElement] = useState(null);
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState(false);
 
