@@ -25,7 +25,19 @@ export default function Home() {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState('');
-  const [selectedPlaylist, setSelectedPlaylist] = useState(null);
+  // Fix selectedPlaylist type
+  const [selectedPlaylist, setSelectedPlaylist] = useState<number | null>(null);
+  
+  // Fix addToPlaylist parameter type
+  const addToPlaylist = (trackIndex: number) => {
+    setShowPlaylistModal(true);
+  };
+  
+  // Fix playTrack parameter type
+  const playTrack = (index: number) => {
+    setCurrentTrack(index);
+    setIsPlaying(true);
+  };
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState(false);
@@ -156,15 +168,11 @@ export default function Home() {
     setVolume(newVolume);
   };
 
-  const formatTime = (time) => {
+  const formatTime = (time: number) => {
     if (isNaN(time)) return '0:00';
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60).toString().padStart(2, '0');
     return `${minutes}:${seconds}`;
-  };
-
-  const addToPlaylist = (trackIndex) => {
-    setShowPlaylistModal(true);
   };
 
   const createNewPlaylist = () => {
@@ -204,11 +212,6 @@ export default function Home() {
     linkElement.click();
   };
 
-  const playTrack = (index) => {
-    setCurrentTrack(index);
-    setIsPlaying(true);
-  };
-
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
@@ -243,15 +246,15 @@ export default function Home() {
                 onClick={() => setSelectedPlaylist(index)}
               >
                 <span>{playlist.name}</span>
-                <button 
-                  className="bg-transparent border border-gray-600 text-gray-300 px-2 py-1 rounded text-xs transition-all hover:bg-blue-500 hover:text-white hover:border-blue-500"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    exportPlaylist(index);
-                  }}
-                >
-                  Export
-                </button>
+                  <button 
+                    className="bg-transparent border border-gray-600 text-gray-300 px-2 py-1 rounded text-xs transition-all hover:bg-blue-500 hover:text-white hover:border-blue-500"
+                    onClick={(e: React.MouseEvent) => {
+                      e.stopPropagation();
+                      exportPlaylist(index);
+                    }}
+                  >
+                    Export
+                  </button>
               </div>
             ))}
           </div>
