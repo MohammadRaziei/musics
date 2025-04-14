@@ -28,7 +28,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      PREFIX_PATH: /advanced-python-course
+      PREFIX_PATH: /musics
     steps:
       - name: Checkout
         uses: actions/checkout@v4
