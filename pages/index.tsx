@@ -16,7 +16,13 @@ export default function Home() {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.7);
-  const [playlists, setPlaylists] = useState([]);
+  // Define the Playlist interface
+    interface Playlist {
+      name: string;
+      tracks: number[];
+    }
+  
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState('');
   const [selectedPlaylist, setSelectedPlaylist] = useState(null);
