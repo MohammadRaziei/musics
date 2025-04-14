@@ -1,0 +1,480 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 90px);
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #000000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #333;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.logo h1 {
+  margin-left: 10px;
+  font-size: 1.5rem;
+  color: #1e88e5; /* Changed from #1DB954 to blue */
+}
+
+.menuItem svg {
+  margin-right: 10px;
+  color: #1e88e5; /* Changed from #1DB954 to blue */
+  font-size: 1.2rem; /* Increased icon size */
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.menuItem:hover {
+  background-color: #333;
+}
+
+.menuItem svg {
+  margin-right: 10px;
+  color: #1DB954;
+}
+
+.playlistSection {
+  margin-top: 20px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.playlistSection h2 {
+  font-size: 1rem;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.playlistItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.playlistItem:hover {
+  background-color: #333;
+}
+
+.playlistItem.active {
+  background-color: #1e88e5; /* Changed from #1DB954 to blue */
+  color: #000;
+}
+
+.exportButton {
+  background: transparent;
+  border: 1px solid #666;
+  color: #ccc;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exportButton:hover {
+  background-color: #1e88e5; /* Changed from #1DB954 to blue */
+  color: #000;
+  border-color: #1e88e5; /* Changed from #1DB954 to blue */
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.header {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #333;
+}
+
+.musicGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.musicCard {
+  background-color: #181818;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.musicCard:hover {
+  background-color: #282828;
+  transform: translateY(-5px);
+}
+
+.albumCover {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  cursor: pointer;
+}
+
+.albumCover img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.playOverlay svg {
+  font-size: 3rem; /* Increased play icon size */
+  color: #1e88e5; /* Changed from #1DB954 to blue */
+}
+
+.albumCover:hover .playOverlay {
+  opacity: 1;
+}
+
+.trackInfo {
+  padding: 12px;
+}
+
+.trackInfo h3 {
+  font-size: 0.9rem;
+  margin: 0 0 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trackInfo p {
+  font-size: 0.8rem;
+  color: #999;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player {
+  height: 90px;
+  background-color: #181818;
+  border-top: 1px solid #333;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.nowPlaying {
+  display: flex;
+  align-items: center;
+  width: 30%;
+}
+
+.miniCover {
+  width: 60px;
+  height: 60px;
+  border-radius: 4px;
+  margin-right: 15px;
+  object-fit: cover;
+}
+
+.trackDetails {
+  overflow: hidden;
+}
+
+.trackDetails h3 {
+  margin: 0 0 5px 0;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trackDetails p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+}
+
+.mainControls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.controlButton {
+  background: transparent;
+  border: none;
+  color: #ccc;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: color 0.2s;
+}
+
+.controlButton:hover, .controlButton.active {
+  color: #1e88e5; /* Changed from #1DB954 to blue */
+}
+
+.playButton {
+  background-color: #1e88e5; /* Changed from #1DB954 to blue */
+  border: none;
+  color: #000;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin: 0 15px;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.playButton:hover {
+  transform: scale(1.1);
+  background-color: #42a5f5; /* Changed from #1ed760 to lighter blue */
+}
+
+.progressContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.time {
+  font-size: 0.7rem;
+  color: #999;
+  width: 40px;
+  text-align: center;
+}
+
+.progressBar {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #555;
+  border-radius: 2px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.progressBar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #1e88e5; /* Changed from #1DB954 to blue */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.extraControls {
+  display: flex;
+  align-items: center;
+  width: 30%;
+  justify-content: flex-end;
+}
+
+.volumeControl {
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+
+.volumeSlider {
+  width: 80px;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #555;
+  border-radius: 2px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #1e88e5; /* Changed from #1DB954 to blue */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: #282828;
+  border-radius: 8px;
+  padding: 20px;
+  width: 400px;
+  max-width: 90%;
+}
+
+.modalContent h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.playlistList {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.playlistOption {
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.playlistOption:hover {
+  background-color: #333;
+}
+
+.newPlaylist {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.newPlaylist input {
+  flex: 1;
+  background-color: #333;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.newPlaylist button {
+  background-color: #1e88e5; /* Changed from #1DB954 to blue */
+  border: none;
+  color: #000;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.newPlaylist button:hover {
+  background-color: #42a5f5; /* Changed from #1ed760 to lighter blue */
+}
+
+.closeButton {
+  background-color: transparent;
+  border: 1px solid #999;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.closeButton:hover {
+  background-color: #333;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #333;
+  }
+  
+  .player {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+  
+  .nowPlaying, .controls, .extraControls {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .musicGrid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}

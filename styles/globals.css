@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0a192f 0%, #172a45 100%);
+  color: #ffffff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@layer components {
+  .progress-bar {
+    @apply h-1 bg-gray-700 rounded-full overflow-hidden cursor-pointer;
+  }
+  
+  .progress-bar::-webkit-slider-thumb {
+    @apply appearance-none w-3 h-3 bg-blue-500 rounded-full cursor-pointer;
+    box-shadow: -100vw 0 0 100vw rgba(72, 169, 255, 0.5);
+  }
+  
+  .volume-slider {
+    @apply w-20 h-1 bg-gray-700 rounded-full overflow-hidden cursor-pointer;
+  }
+  
+  .volume-slider::-webkit-slider-thumb {
+    @apply appearance-none w-3 h-3 bg-blue-500 rounded-full cursor-pointer;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-500 text-white transition-all duration-300 hover:bg-blue-600 hover:scale-105;
+  }
+  
+  .text-primary {
+    @apply text-blue-500;
+  }
+  
+  .hover-primary {
+    @apply hover:text-blue-500 transition-colors duration-200;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:bg-opacity-10 hover:bg-white hover:-translate-y-2 hover:shadow-lg;
+  }
+  
+  .sidebar-item {
+    @apply flex items-center p-2 rounded-md cursor-pointer transition-colors duration-200 hover:bg-white hover:bg-opacity-10 hover:text-blue-500;
+  }
+  
+  .playlist-item {
+    @apply flex justify-between items-center p-2 rounded-md cursor-pointer transition-colors duration-200 hover:bg-white hover:bg-opacity-10;
+  }
+  
+  .playlist-item.active {
+    @apply bg-blue-500 bg-opacity-20 text-blue-500;
+  }
+}
