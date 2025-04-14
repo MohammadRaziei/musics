@@ -143,7 +143,7 @@ export default function Home() {
     setCurrentTrack((prev) => (prev === 0 ? musics.length - 1 : prev - 1));
   };
 
-  const handleTimeChange = (e) => {
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newTime = parseFloat(e.target.value);
     setCurrentTime(newTime);
     if (audioElement) {
@@ -151,7 +151,7 @@ export default function Home() {
     }
   };
 
-  const handleVolumeChange = (e) => {
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(e.target.value);
     setVolume(newVolume);
   };
