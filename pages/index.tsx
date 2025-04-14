@@ -184,7 +184,8 @@ export default function Home() {
     setNewPlaylistName('');
   };
 
-  const addTrackToPlaylist = (playlistIndex) => {
+  // Fix addTrackToPlaylist parameter type
+  const addTrackToPlaylist = (playlistIndex: number) => {
     const updatedPlaylists = [...playlists];
     if (!updatedPlaylists[playlistIndex].tracks.includes(currentTrack)) {
       updatedPlaylists[playlistIndex].tracks.push(currentTrack);
@@ -194,7 +195,8 @@ export default function Home() {
     setShowPlaylistModal(false);
   };
 
-  const exportPlaylist = (playlistIndex) => {
+  // Fix exportPlaylist parameter type
+  const exportPlaylist = (playlistIndex: number) => {
     const playlist = playlists[playlistIndex];
     const playlistData = {
       name: playlist.name,
