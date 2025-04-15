@@ -6,6 +6,33 @@
     "album": "Azizam - Single",
     "duration": 180,
     "coverUrl": "https://musics-fa.com/wp-content/uploads/2025/03/Ed-Sheeran%E2%80%8C-Azizam-Music-fa.com_.jpg",
-    "audioUrl": "https://dls.musics-fa.com/song/alibz/dlswm/Ed%20Sheeran%E2%80%8C%20-%20Azizam%20(320).mp3"
+    "audioUrl": "https://dl.sevilmusics.com/cdn/music/srvrh/Ed%20Sheeran%20--%20Azizam%20[SevilMusic].mp3"
+  },
+  {
+    "id": 2,
+    "title": "Derniere Danse",
+    "artist": "Indila",
+    "album": "Mini World",
+    "duration": 224,
+    "coverUrl": "https://ahaang.com/wp-content/uploads/2019/01/51mV1BJHWEL.jpg",
+    "audioUrl": "https://dl.mihanmusics.com/all/Indila/Indila%20-%20Derniere%20Danse.mp3"
+  },
+  {
+    "id": 3,
+    "title": "Love Story",
+    "artist": "Indila",
+    "album": "Mini World",
+    "duration": 238,
+    "coverUrl": "https://ahaang.com/wp-content/uploads/2019/01/51mV1BJHWEL.jpg",
+    "audioUrl": "https://dl.mihanmusics.com/all/Indila/Indila%20-%20Love%20Story.mp3"
+  },
+  {
+    "id": 4,
+    "title": "Tourner Dans Le Vide",
+    "artist": "Indila",
+    "album": "Mini World",
+    "duration": 246,
+    "coverUrl": "https://ahaang.com/wp-content/uploads/2019/01/51mV1BJHWEL.jpg",
+    "audioUrl": "https://dl.mihanmusics.com/all/Indila/Indila%20-%20Tourner%20Dans%20Le%20Vide.mp3"
   }
 ]
