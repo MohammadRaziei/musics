@@ -34,5 +34,23 @@
     "duration": 246,
     "coverUrl": "https://ahaang.com/wp-content/uploads/2019/01/51mV1BJHWEL.jpg",
     "audioUrl": "https://dl.mihanmusics.com/all/Indila/Indila%20-%20Tourner%20Dans%20Le%20Vide.mp3"
+  },
+  {
+    "id": 5,
+    "title": "Despacito",
+    "artist": "Luis Fonsi ft. Daddy Yankee",
+    "album": "Vida",
+    "duration": 229,
+    "coverUrl": "https://musicdel.ir/wp-content/uploads/2023/08/despacito.jpg",
+    "audioUrl": "https://dl.musicdel.ir/Music/1401/03/luis_fonsi_despacito.mp3"
+  },
+  {
+    "id": 6,
+    "title": "Shape of You",
+    "artist": "Ed Sheeran",
+    "album": "÷ (Divide)",
+    "duration": 233,
+    "coverUrl": "https://behmelody.in/wp-content/uploads/2022/12/Ed-Sheeran.jpg",
+    "audioUrl": "https://behmelody.musicmellnet.com/1401/Azar/Ed%20Sheeran%20-%20Shape%20of%20You.mp3"
   }
 ]
