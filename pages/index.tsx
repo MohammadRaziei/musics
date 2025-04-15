@@ -60,7 +60,7 @@ export default function Home() {
     // Add error handling for audio loading
     audio.addEventListener('error', (e) => {
       console.error("Audio error:", e);
-      alert(`Cannot play "${musics[currentTrack]?.title}". The audio format may not be supported or the resource is unavailable.`);
+      // alert(`Cannot play "${musics[currentTrack]?.title}". The audio format may not be supported or the resource is unavailable.`);
       setIsPlaying(false);
     });
     
