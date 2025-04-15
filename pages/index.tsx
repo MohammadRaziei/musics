@@ -1,14 +1,26 @@
 import { useState, useEffect } from 'react';
+
 import Head from 'next/head';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faPlay, faPause, faStepForward, faStepBackward, 
-  faVolumeUp, faHeart, faDownload, faPlus, faMusic,
-  faRandom, faRedo
-} from '@fortawesome/free-solid-svg-icons';
 import musics from '../data/music.json';
-// Replace CSS module imports with direct Tailwind classes
-// import styles from '../styles/Home.module.css';
+import Sidebar from '../components/Sidebar';
+import MusicGrid from '../components/MusicGrid';
+import Player from '../components/Player';
+import PlaylistModal from '../components/PlaylistModal';
+import HamburgerMenu from '../components/HamburgerMenu';
+import LoadingSpinner from '../components/LoadingSpinner';
+
+// Define interfaces
+interface Playlist {
+  name: string;
+  tracks: number[];
+}
+
+interface Track {
+  title: string;
+  artist: string;
+  coverUrl: string;
+  audioUrl: string;
+}
 
 export default function Home() {
   const [currentTrack, setCurrentTrack] = useState(0);
@@ -16,31 +28,15 @@ export default function Home() {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(0.7);
-  // Define the Playlist interface
-    interface Playlist {
-      name: string;
-      tracks: number[];
-    }
-  
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [showPlaylistModal, setShowPlaylistModal] = useState(false);
   const [newPlaylistName, setNewPlaylistName] = useState('');
-  // Fix selectedPlaylist type
   const [selectedPlaylist, setSelectedPlaylist] = useState<number | null>(null);
-  
-  // Fix addToPlaylist parameter type
-  const addToPlaylist = (trackIndex: number) => {
-    setShowPlaylistModal(true);
-  };
-  
-  // Fix playTrack parameter type
-  const playTrack = (index: number) => {
-    setCurrentTrack(index);
-    setIsPlaying(true);
-  };
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load playlists from localStorage on component mount
   useEffect(() => {
@@ -69,6 +65,7 @@ export default function Home() {
     });
     
     setAudioElement(audio);
+    setIsLoading(false);
     
     return () => {
       if (audio) {
@@ -175,6 +172,10 @@ export default function Home() {
     return `${minutes}:${seconds}`;
   };
 
+  const addToPlaylist = (trackIndex: number) => {
+    setShowPlaylistModal(true);
+  };
+
   const createNewPlaylist = () => {
     if (!newPlaylistName.trim()) return;
     
@@ -184,7 +185,6 @@ export default function Home() {
     setNewPlaylistName('');
   };
 
-  // Fix addTrackToPlaylist parameter type
   const addTrackToPlaylist = (playlistIndex: number) => {
     const updatedPlaylists = [...playlists];
     if (!updatedPlaylists[playlistIndex].tracks.includes(currentTrack)) {
@@ -195,7 +195,6 @@ export default function Home() {
     setShowPlaylistModal(false);
   };
 
-  // Fix exportPlaylist parameter type
   const exportPlaylist = (playlistIndex: number) => {
     const playlist = playlists[playlistIndex];
     const playlistData = {
@@ -214,217 +213,110 @@ export default function Home() {
     linkElement.click();
   };
 
+  const playTrack = (index: number) => {
+    setCurrentTrack(index);
+    setIsPlaying(true);
+  };
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-900 text-white">
       <Head>
         <title>MR Music</title>
         <meta name="description" content="A beautiful music player app" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="https://github.com/MohammadRaziei/mohammadraziei.github.io/raw/main/src/images/logo.svg" />
       </Head>
 
-      <main className="flex flex-1 h-[calc(100vh-90px)] overflow-hidden">
-        {/* Sidebar */}
-        <div className="w-64 bg-black bg-opacity-30 p-6 flex flex-col border-r border-white border-opacity-10">
-          <div className="flex items-center mb-8">
-            <img 
-              src="https://github.com/MohammadRaziei/mohammadraziei.github.io/raw/main/src/images/logo.svg" 
-              alt="MR Music Logo" 
-              className="w-10 h-10" 
-            />
-            <h1 className="ml-3 text-xl font-bold text-blue-500">MR Music</h1>
-          </div>
-          
-          <div className="sidebar-item">
-            <FontAwesomeIcon icon={faMusic} className="mr-4 text-blue-500 text-lg" />
-            <span>All Music</span>
-          </div>
-          
-          <div className="mt-8 flex-1 overflow-y-auto">
-            <h2 className="text-xs uppercase text-blue-400 font-semibold mb-4">Playlists</h2>
-            {playlists.map((playlist, index) => (
-              <div 
-                key={index} 
-                className={`playlist-item ${selectedPlaylist === index ? 'active' : ''}`}
-                onClick={() => setSelectedPlaylist(index)}
-              >
-                <span>{playlist.name}</span>
-                  <button 
-                    className="bg-transparent border border-gray-600 text-gray-300 px-2 py-1 rounded text-xs transition-all hover:bg-blue-500 hover:text-white hover:border-blue-500"
-                    onClick={(e: React.MouseEvent) => {
-                      e.stopPropagation();
-                      exportPlaylist(index);
-                    }}
-                  >
-                    Export
-                  </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="flex-1 p-6 overflow-y-auto">
-          <div className="mb-6 pb-3 border-b border-white border-opacity-10">
-            <h2 className="text-2xl font-semibold">{selectedPlaylist !== null ? playlists[selectedPlaylist].name : 'All Music'}</h2>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {(selectedPlaylist !== null 
-              ? playlists[selectedPlaylist].tracks.map(index => musics[index])
-              : musics
-            ).map((track, index) => (
-              <div key={index} className="bg-white bg-opacity-5 rounded-xl overflow-hidden card-hover">
-                <div 
-                  className="relative w-full pt-[100%] cursor-pointer"
-                  onClick={() => playTrack(selectedPlaylist !== null 
-                    ? playlists[selectedPlaylist].tracks[index]
-                    : index
-                  )}
-                >
-                  <img src={track.coverUrl} alt={track.title} className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
-                  <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100">
-                    <FontAwesomeIcon icon={faPlay} className="text-4xl text-blue-500" />
-                  </div>
-                </div>
-                <div className="p-3">
-                  <h3 className="text-base font-medium truncate">{track.title}</h3>
-                  <p className="text-sm text-gray-400 truncate">{track.artist}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </main>
-
-      {/* Player */}
-      <div className="h-[90px] bg-black bg-opacity-80 backdrop-blur-md border-t border-white border-opacity-10 flex items-center px-6 fixed bottom-0 w-full z-50">
-        <div className="flex items-center w-1/3">
-          <img 
-            src={musics[currentTrack]?.coverUrl} 
-            alt={musics[currentTrack]?.title} 
-            className="w-[60px] h-[60px] rounded-lg mr-4 object-cover shadow-lg transition-transform duration-300 hover:scale-105"
-          />
-          <div className="overflow-hidden">
-            <h3 className="text-sm font-medium truncate">{musics[currentTrack]?.title}</h3>
-            <p className="text-xs text-gray-400 truncate">{musics[currentTrack]?.artist}</p>
-          </div>
-        </div>
-
-        <div className="flex flex-col items-center justify-center w-1/3">
-          <div className="flex items-center mb-2">
-            <button 
-              className={`bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-3 transition-all hover:text-blue-500 hover:scale-110 ${shuffle ? 'text-blue-500' : ''}`}
-              onClick={() => setShuffle(!shuffle)}
-            >
-              <FontAwesomeIcon icon={faRandom} />
-            </button>
-            <button className="bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-3 transition-all hover:text-blue-500 hover:scale-110" onClick={handlePrevious}>
-              <FontAwesomeIcon icon={faStepBackward} />
-            </button>
-            <button className="bg-blue-500 border-none text-white w-12 h-12 rounded-full flex items-center justify-center cursor-pointer mx-4 transition-all hover:scale-110 hover:bg-blue-600 shadow-lg shadow-blue-500/30" onClick={handlePlayPause}>
-              <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
-            </button>
-            <button className="bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-3 transition-all hover:text-blue-500 hover:scale-110" onClick={handleNext}>
-              <FontAwesomeIcon icon={faStepForward} />
-            </button>
-            <button 
-              className={`bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-3 transition-all hover:text-blue-500 hover:scale-110 ${repeat ? 'text-blue-500' : ''}`}
-              onClick={() => setRepeat(!repeat)}
-            >
-              <FontAwesomeIcon icon={faRedo} />
-            </button>
-          </div>
-
-          <div className="flex items-center w-full">
-            <span className="text-xs text-gray-400 w-10 text-center">{formatTime(currentTime)}</span>
-            <input
-              type="range"
-              min="0"
-              max={duration || 0}
-              value={currentTime}
-              onChange={handleTimeChange}
-              className="progress-bar flex-1 mx-2"
-            />
-            <span className="text-xs text-gray-400 w-10 text-center">{formatTime(duration)}</span>
-          </div>
-        </div>
-
-        <div className="flex items-center justify-end w-1/3">
-          <button className="bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-2 transition-all hover:text-blue-500 hover:scale-110" onClick={() => addToPlaylist(currentTrack)}>
-            <FontAwesomeIcon icon={faPlus} />
-          </button>
-          <button className="bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-2 transition-all hover:text-blue-500 hover:scale-110">
-            <FontAwesomeIcon icon={faHeart} />
-          </button>
-          <button 
-            className="bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-2 transition-all hover:text-blue-500 hover:scale-110"
-            onClick={() => {
-              if (musics[currentTrack]?.audioUrl) {
-                const link = document.createElement('a');
-                link.href = musics[currentTrack].audioUrl;
-                link.download = `${musics[currentTrack].artist} - ${musics[currentTrack].title}.mp3`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }
-            }}
-          >
-            <FontAwesomeIcon icon={faDownload} />
-          </button>
-          <div className="flex items-center ml-4">
-            <FontAwesomeIcon icon={faVolumeUp} className="text-gray-300" />
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={handleVolumeChange}
-              className="volume-slider ml-2"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Playlist Modal */}
-      {showPlaylistModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[1000]">
-          <div className="bg-gray-800 rounded-lg p-5 w-[400px] max-w-[90%]">
-            <h2 className="mt-0 mb-5 text-white">Add to Playlist</h2>
-            <div className="max-h-[200px] overflow-y-auto mb-5">
-              {playlists.map((playlist, index) => (
-                <div 
-                  key={index} 
-                  className="p-3 rounded cursor-pointer transition-colors hover:bg-gray-700"
-                  onClick={() => addTrackToPlaylist(index)}
-                >
-                  {playlist.name}
-                </div>
-              ))}
-            </div>
-            <div className="flex mb-5">
-              <input
-                type="text"
-                placeholder="New playlist name"
-                value={newPlaylistName}
-                onChange={(e) => setNewPlaylistName(e.target.value)}
-                className="flex-1 bg-gray-700 border-none p-3 rounded text-white mr-2"
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          {/* Mobile Header */}
+          <div className="md:hidden flex items-center justify-between p-4 border-b border-white border-opacity-10">
+            <div className="flex items-center">
+              <img 
+                src="https://github.com/MohammadRaziei/mohammadraziei.github.io/raw/main/src/images/logo.svg" 
+                alt="MR Music Logo" 
+                className="w-8 h-8" 
               />
-              <button 
-                onClick={createNewPlaylist}
-                className="bg-blue-500 border-none text-white p-3 rounded cursor-pointer transition-colors hover:bg-blue-600"
-              >
-                <FontAwesomeIcon icon={faPlus} /> Create
-              </button>
+              <h1 className="ml-3 text-lg font-bold text-blue-500">MR Music</h1>
             </div>
-            <button 
-              className="bg-transparent border border-gray-600 text-white p-3 rounded cursor-pointer transition-colors hover:bg-gray-700 w-full"
-              onClick={() => setShowPlaylistModal(false)}
-            >
-              Cancel
-            </button>
+            <HamburgerMenu isOpen={isMobileMenuOpen} toggle={toggleMobileMenu} />
           </div>
-        </div>
+
+          <div className="flex flex-1 flex-col md:flex-row h-[calc(100vh-90px)] md:overflow-hidden">
+            {/* Mobile Sidebar (conditionally rendered) */}
+            {isMobileMenuOpen && (
+              <div className="md:hidden">
+                <Sidebar 
+                  playlists={playlists}
+                  selectedPlaylist={selectedPlaylist}
+                  setSelectedPlaylist={(index) => {
+                    setSelectedPlaylist(index);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  exportPlaylist={exportPlaylist}
+                  showAddPlaylistModal={() => setShowPlaylistModal(true)}
+                />
+              </div>
+            )}
+
+            {/* Desktop Sidebar (always visible on md+) */}
+            <div className="hidden md:block">
+              <Sidebar 
+                playlists={playlists}
+                selectedPlaylist={selectedPlaylist}
+                setSelectedPlaylist={setSelectedPlaylist}
+                exportPlaylist={exportPlaylist}
+                showAddPlaylistModal={() => setShowPlaylistModal(true)}
+              />
+            </div>
+
+            {/* Content */}
+            <MusicGrid 
+              selectedPlaylist={selectedPlaylist}
+              playlists={playlists}
+              musics={musics as Track[]}
+              playTrack={playTrack}
+            />
+          </div>
+
+          {/* Player */}
+          <Player 
+            currentTrack={currentTrack}
+            isPlaying={isPlaying}
+            duration={duration}
+            currentTime={currentTime}
+            volume={volume}
+            shuffle={shuffle}
+            repeat={repeat}
+            musics={musics as Track[]}
+            handlePlayPause={handlePlayPause}
+            handlePrevious={handlePrevious}
+            handleNext={handleNext}
+            handleTimeChange={handleTimeChange}
+            handleVolumeChange={handleVolumeChange}
+            formatTime={formatTime}
+            setShuffle={setShuffle}
+            setRepeat={setRepeat}
+            addToPlaylist={addToPlaylist}
+          />
+
+          {/* Playlist Modal */}
+          <PlaylistModal 
+            showPlaylistModal={showPlaylistModal}
+            playlists={playlists}
+            newPlaylistName={newPlaylistName}
+            setNewPlaylistName={setNewPlaylistName}
+            createNewPlaylist={createNewPlaylist}
+            addTrackToPlaylist={addTrackToPlaylist}
+            closeModal={() => setShowPlaylistModal(false)}
+          />
+        </>
       )}
     </div>
   );
