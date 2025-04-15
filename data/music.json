@@ -55,6 +55,24 @@
   },
   {
     "id": 7,
+    "title": "Set Fire to the Rain",
+    "artist": "Adele",
+    "album": "21",
+    "duration": 242,
+    "coverUrl": "https://subkade.ir/wp-content/uploads/2020/04/Adele-Set-Fire-to-the-Rain.jpg",
+    "audioUrl": "https://behmelody.musicmellnet.com/1401/Ordibehesht/Set%20Fire%20to%20the%20Rain%20-%20Adele%20%28320%29.mp3"
+  },
+  {
+    "id": 8,
+    "title": "Hello",
+    "artist": "Adele",
+    "album": "25",
+    "duration": 295,
+    "coverUrl": "https://ts5.tarafdari.com/contents/user696824/content-sound/adele_0.jpg",
+    "audioUrl": "https://behmelody.musicmellnet.com/1400/Dey/Adele%20-%20Hello%20%282%29.mp3"
+  },
+  {
+    "id": 9,
     "title": "Unstoppable",
     "artist": "Sia",
     "album": "This Is Acting",
