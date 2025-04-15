@@ -12,12 +12,9 @@ A beautiful and responsive music player web application built with Next.js and R
 - 🌙 Dark mode interface
 - 🎨 Beautiful UI with album artwork
 
-## 🚀 Getting Started
+## 🔗 Live Demo
 
-### Prerequisites
-
-- Node.js (v14 or later)
-- npm or yarn
+Check out the live demo: [mohammadraziei.github.io/musics/](https://mohammadraziei.github.io/musics/)
 
 ## 🛠️ Built With
 - Next.js - React framework
