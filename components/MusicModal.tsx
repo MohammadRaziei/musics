@@ -98,7 +98,7 @@ const MusicModal: React.FC<MusicModalProps> = ({
       const deltaY = clientY - startY;
       
       // Vertical swipe to close
-      if (Math.abs(deltaY) > 60) {
+      if (Math.abs(deltaY) > 30) {
         onClose();
         setStartY(null);
         setStartX(null);
@@ -108,7 +108,7 @@ const MusicModal: React.FC<MusicModalProps> = ({
       // Horizontal swipe for navigation (only on mobile)
       if (startX !== null) {
         const deltaX = clientX - startX;
-        if (Math.abs(deltaX) > 60 && Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (Math.abs(deltaX) > 30 && Math.abs(deltaX) > Math.abs(deltaY)) {
           if (deltaX > 0 && onNavigatePrevious) {
             onNavigatePrevious();
             setStartY(null);
