@@ -47,12 +47,13 @@ const MusicGrid: React.FC<MusicGridProps> = ({
   const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
 
   const handleTrackClick = (index: number) => {
-    setSelectedTrack(index);
     setModalOpen(true);
+    setSelectedTrack(index);
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
+    setSelectedTrack(currentTrack);
   };
 
   const handlePlayInModal = () => {
@@ -60,6 +61,15 @@ const MusicGrid: React.FC<MusicGridProps> = ({
       playTrack(selectedTrack);
     }
   };
+
+
+  // Auto-select currentTrack if modal is open but selectedTrack is null
+  // Remove or comment out this effect if you want the modal to always open with the clicked track
+  // React.useEffect(() => {
+  //   if (modalOpen && selectedTrack === null) {
+  //     setSelectedTrack(currentTrack);
+  //   }
+  // }, [modalOpen, selectedTrack, currentTrack]);
 
   // Get the list of tracks currently displayed in the grid
   const displayedTracks = selectedPlaylist !== null
@@ -87,10 +97,6 @@ const MusicGrid: React.FC<MusicGridProps> = ({
     const currentIndex = displayedTracks.indexOf(selectedTrack);
     navigateToTrack(currentIndex - 1);
   };
-
-
-
-
 
 
 

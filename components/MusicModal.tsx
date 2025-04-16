@@ -44,6 +44,14 @@ const MusicModal: React.FC<MusicModalProps> = ({
   const [startX, setStartX] = useState<number | null>(null);
   const [visualizerData, setVisualizerData] = useState<number[]>(Array(30).fill(0));
 
+  // ... existing code ...
+
+  React.useEffect(() => {
+    console.log('MusicModal isOpen:', isOpen);
+  }, [isOpen]);
+
+// ... existing code ...
+
   // Generate random visualizer data for demo purposes
   useEffect(() => {
     if (isOpen && isPlaying) {
