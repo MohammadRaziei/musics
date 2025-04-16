@@ -28,6 +28,8 @@ interface MusicGridProps {
   handlePrevious: () => void;
   currentTime: number;
   duration: number;
+  modalOpen: boolean;
+  setModalOpen: (open: boolean) => void;
 }
 
 const MusicGrid: React.FC<MusicGridProps> = ({
@@ -41,10 +43,11 @@ const MusicGrid: React.FC<MusicGridProps> = ({
   handleNext,
   handlePrevious,
   currentTime,
-  duration
+  duration,
+  modalOpen,
+  setModalOpen,
 }) => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
+  const [selectedTrack, setSelectedTrack] = useState<number>(currentTrack);
 
   const handleTrackClick = (index: number) => {
     setModalOpen(true);

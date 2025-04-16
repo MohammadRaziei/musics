@@ -63,15 +63,16 @@ const Player: React.FC<PlayerProps> = ({
       {/* Mobile Player */}
       <div className="md:hidden p-3">
         <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center flex-1 overflow-hidden">
+          <div className="flex items-center flex-1 overflow-hidden cursor-pointer"
+                        onClick={() => {
+                          setSelectedTrack(currentTrack);
+                          setModalOpen(true);
+                        }}
+                        >
             <img
               src={musics[currentTrack]?.coverUrl}
               alt={musics[currentTrack]?.title}
               className="w-12 h-12 rounded-md object-cover cursor-pointer"
-              onClick={() => {
-                setSelectedTrack(currentTrack);
-                setModalOpen(true);
-              }}
             />
             <div className="overflow-hidden">
               <h3 className="text-sm font-medium truncate">{musics[currentTrack]?.title}</h3>
@@ -99,15 +100,16 @@ const Player: React.FC<PlayerProps> = ({
 
       {/* Desktop Player */}
       <div className="hidden md:flex h-[90px] items-center px-6">
-        <div className="flex items-center w-1/3">
+        <div className="flex items-center w-1/3 cursor-pointer"
+          onClick={() => {
+            setSelectedTrack(currentTrack);
+            setModalOpen(true);
+          }}
+        >
           <img
             src={musics[currentTrack]?.coverUrl}
             alt={musics[currentTrack]?.title}
-            className="w-[60px] h-[60px] rounded-lg mr-4 object-cover shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
-            onClick={() => {
-              setSelectedTrack(currentTrack);
-              setModalOpen(true);
-            }}
+            className="w-[60px] h-[60px] rounded-lg mr-4 object-cover shadow-lg transition-transform duration-300 hover:scale-105"
           />
           <div className="overflow-hidden">
             <h3 className="text-sm font-medium truncate">{musics[currentTrack]?.title}</h3>

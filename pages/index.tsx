@@ -40,6 +40,7 @@ export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
 
+
   // Load playlists from localStorage on component mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -291,6 +292,8 @@ export default function Home() {
               handlePrevious={handlePrevious}
               currentTime={currentTime}
               duration={duration}
+              modalOpen={modalOpen}
+              setModalOpen={setModalOpen}
             />
           </div>
 
@@ -315,6 +318,7 @@ export default function Home() {
             addToPlaylist={addToPlaylist}
             setModalOpen={setModalOpen}
             setSelectedTrack={setSelectedTrack}
+            
           />
 
           {/* Playlist Modal */}
