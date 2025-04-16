@@ -41,6 +41,7 @@ const MusicModal: React.FC<MusicModalProps> = ({
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [startY, setStartY] = useState<number | null>(null);
+  const [startX, setStartX] = useState<number | null>(null);
   const [visualizerData, setVisualizerData] = useState<number[]>(Array(30).fill(0));
 
   // Generate random visualizer data for demo purposes
@@ -72,26 +73,68 @@ const MusicModal: React.FC<MusicModalProps> = ({
     };
   }, [isOpen, onClose]);
 
-  // Handle drag to close
+  // Handle drag to close and swipe navigation (for mobile only)
   const handleTouchStart = (e: React.TouchEvent | React.MouseEvent) => {
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    setStartY(clientY);
+    // Only track touch events (mobile) for horizontal swipes
+    if ('touches' in e) {
+      const clientY = e.touches[0].clientY;
+      const clientX = e.touches[0].clientX;
+      setStartY(clientY);
+      setStartX(clientX);
+    } else {
+      // For mouse events, only track vertical movement for closing
+      const clientY = e.clientY;
+      setStartY(clientY);
+    }
   };
 
   const handleTouchMove = (e: React.TouchEvent | React.MouseEvent) => {
     if (!startY) return;
     
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    const deltaY = clientY - startY;
-    
-    if (deltaY > 100) {
-      onClose();
-      setStartY(null);
+    if ('touches' in e) {
+      // Mobile touch handling with both vertical and horizontal swipes
+      const clientY = e.touches[0].clientY;
+      const clientX = e.touches[0].clientX;
+      const deltaY = clientY - startY;
+      
+      // Vertical swipe to close
+      if (Math.abs(deltaY) > 100) {
+        onClose();
+        setStartY(null);
+        setStartX(null);
+        return;
+      }
+      
+      // Horizontal swipe for navigation (only on mobile)
+      if (startX !== null) {
+        const deltaX = clientX - startX;
+        if (Math.abs(deltaX) > 100 && Math.abs(deltaX) > Math.abs(deltaY)) {
+          if (deltaX > 0 && onNavigatePrevious) {
+            onNavigatePrevious();
+            setStartY(null);
+            setStartX(null);
+          } else if (deltaX < 0 && onNavigateNext) {
+            onNavigateNext();
+            setStartY(null);
+            setStartX(null);
+          }
+        }
+      }
+    } else {
+      // Desktop mouse handling - only for vertical drag to close
+      const clientY = e.clientY;
+      const deltaY = clientY - startY;
+      
+      if (deltaY > 100) {
+        onClose();
+        setStartY(null);
+      }
     }
   };
 
   const handleTouchEnd = () => {
     setStartY(null);
+    setStartX(null);
   };
 
   // Add keyboard navigation
