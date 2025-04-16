@@ -147,10 +147,12 @@ export default function Home() {
   };
 
   const handleNext = () => {
+    console.log("handleNext %i", currentTrack);
     setCurrentTrack((prev) => (prev === musics.length - 1 ? 0 : prev + 1));
   };
 
   const handlePrevious = () => {
+    console.log("handlePrevious %i", currentTrack);
     setCurrentTrack((prev) => (prev === 0 ? musics.length - 1 : prev - 1));
   };
 

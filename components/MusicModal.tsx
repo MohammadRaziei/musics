@@ -245,7 +245,7 @@ const MusicModal: React.FC<MusicModalProps> = ({
           {/* Controls */}
           <div className="flex items-center justify-between">
             <button 
-              onClick={() => { onPrevious(); onNavigatePrevious?.(); }}
+              onClick={onPrevious}
               className="text-gray-400 hover:text-white transition-colors p-2"
             >
               <FontAwesomeIcon icon={faStepBackward} size="lg" />
@@ -259,7 +259,7 @@ const MusicModal: React.FC<MusicModalProps> = ({
             </button>
             
             <button 
-              onClick={() => { onNext(); onNavigateNext?.(); }}
+              onClick={onNext}
               className="text-gray-400 hover:text-white transition-colors p-2"
             >
               <FontAwesomeIcon icon={faStepForward} size="lg" />

@@ -30,10 +30,10 @@ interface MusicGridProps {
   duration: number;
 }
 
-const MusicGrid: React.FC<MusicGridProps> = ({ 
-  selectedPlaylist, 
-  playlists, 
-  musics, 
+const MusicGrid: React.FC<MusicGridProps> = ({
+  selectedPlaylist,
+  playlists,
+  musics,
   playTrack,
   currentTrack,
   isPlaying,
@@ -61,44 +61,38 @@ const MusicGrid: React.FC<MusicGridProps> = ({
     }
   };
 
+  // Get the list of tracks currently displayed in the grid
+  const displayedTracks = selectedPlaylist !== null
+    ? playlists[selectedPlaylist].tracks
+    : musics.map((_, i) => i);
+
+  // New navigation functions
+  const navigateToTrack = (targetIndex: number) => {
+    if (selectedTrack === null) return;
+    setSelectedTrack(displayedTracks[targetIndex % displayedTracks.length]);
+  }
+
   // New navigation functions
   const handleNavigateNext = () => {
     if (selectedTrack === null) return;
-    
-    // Get the list of tracks currently displayed in the grid
-    const displayedTracks = selectedPlaylist !== null
-      ? playlists[selectedPlaylist].tracks
-      : musics.map((_, i) => i);
-    
     // Find the current track's position in the displayed tracks
     const currentIndex = displayedTracks.indexOf(selectedTrack);
-    
-    // Navigate to the next track or loop back to the first
-    if (currentIndex < displayedTracks.length - 1) {
-      setSelectedTrack(displayedTracks[currentIndex + 1]);
-    } else {
-      setSelectedTrack(displayedTracks[0]);
-    }
+    navigateToTrack(currentIndex + 1);
   };
 
   const handleNavigatePrevious = () => {
     if (selectedTrack === null) return;
-    
-    // Get the list of tracks currently displayed in the grid
-    const displayedTracks = selectedPlaylist !== null
-      ? playlists[selectedPlaylist].tracks
-      : musics.map((_, i) => i);
-    
     // Find the current track's position in the displayed tracks
     const currentIndex = displayedTracks.indexOf(selectedTrack);
-    
-    // Navigate to the previous track or loop back to the last
-    if (currentIndex > 0) {
-      setSelectedTrack(displayedTracks[currentIndex - 1]);
-    } else {
-      setSelectedTrack(displayedTracks[displayedTracks.length - 1]);
-    }
+    navigateToTrack(currentIndex - 1);
   };
+
+
+
+
+
+
+
 
   return (
     <div className="flex-1 p-4 md:p-6 overflow-y-auto">
@@ -109,19 +103,19 @@ const MusicGrid: React.FC<MusicGridProps> = ({
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-        {(selectedPlaylist !== null 
+        {(selectedPlaylist !== null
           ? playlists[selectedPlaylist].tracks.map(index => ({ ...musics[index], originalIndex: index }))
           : musics.map((track, i) => ({ ...track, originalIndex: i }))
         ).map((track, index) => (
           <div key={index} className="bg-white bg-opacity-5 rounded-xl overflow-hidden card-hover">
-            <div 
+            <div
               className="relative w-full pt-[100%] cursor-pointer"
               onClick={() => handleTrackClick(track.originalIndex)}
             >
-              <img 
-                src={track.coverUrl} 
-                alt={track.title} 
-                className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105" 
+              <img
+                src={track.coverUrl}
+                alt={track.title}
+                className="absolute top-0 left-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
               />
               <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center opacity-0 transition-opacity duration-300 hover:opacity-100">
                 <FontAwesomeIcon icon={faPlay} className="text-4xl text-blue-500" />
@@ -136,14 +130,14 @@ const MusicGrid: React.FC<MusicGridProps> = ({
       </div>
 
       {/* Music Modal */}
-      <MusicModal 
+      <MusicModal
         track={selectedTrack !== null ? musics[selectedTrack] : null}
         isOpen={modalOpen}
         onClose={handleCloseModal}
         onPlay={handlePlayInModal}
         onPause={handlePlayPause}
-        onNext={handleNext}
-        onPrevious={handlePrevious}
+        onNext={() => { handleNext(); navigateToTrack(currentTrack + 1); }}
+        onPrevious={() => { handlePrevious(); navigateToTrack(currentTrack - 1); }}
         isPlaying={isPlaying && selectedTrack === currentTrack}
         currentTime={currentTime}
         duration={duration}
