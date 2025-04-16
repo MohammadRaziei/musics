@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faPlay, faPause, faStepForward, faStepBackward, 
-  faVolumeUp, faHeart, faDownload, faPlus, 
+import {
+  faPlay, faPause, faStepForward, faStepBackward,
+  faVolumeUp, faHeart, faDownload, faPlus,
   faRandom, faRedo
 } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
@@ -31,7 +31,11 @@ interface PlayerProps {
   setShuffle: (value: boolean) => void;
   setRepeat: (value: boolean) => void;
   addToPlaylist: (trackIndex: number) => void;
+  setModalOpen: (open: boolean) => void;
+  setSelectedTrack: (track: number | null) => void;
 }
+
+
 
 const Player: React.FC<PlayerProps> = ({
   currentTrack,
@@ -50,7 +54,9 @@ const Player: React.FC<PlayerProps> = ({
   formatTime,
   setShuffle,
   setRepeat,
-  addToPlaylist
+  addToPlaylist,
+  setModalOpen,
+  setSelectedTrack
 }) => {
   return (
     <div className="bg-black bg-opacity-80 backdrop-blur-md border-t border-white border-opacity-10 fixed bottom-0 w-full z-50">
@@ -58,10 +64,14 @@ const Player: React.FC<PlayerProps> = ({
       <div className="md:hidden p-3">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center flex-1 overflow-hidden">
-            <img 
-              src={musics[currentTrack]?.coverUrl} 
-              alt={musics[currentTrack]?.title} 
-              className="w-10 h-10 rounded mr-2 object-cover"
+            <img
+              src={musics[currentTrack]?.coverUrl}
+              alt={musics[currentTrack]?.title}
+              className="w-12 h-12 rounded-md object-cover cursor-pointer"
+              onClick={() => {
+                setSelectedTrack(currentTrack);
+                setModalOpen(true);
+              }}
             />
             <div className="overflow-hidden">
               <h3 className="text-sm font-medium truncate">{musics[currentTrack]?.title}</h3>
@@ -72,7 +82,7 @@ const Player: React.FC<PlayerProps> = ({
             <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
           </button>
         </div>
-        
+
         <div className="flex items-center w-full">
           <span className="text-xs text-gray-400 w-8 text-center">{formatTime(currentTime)}</span>
           <input
@@ -90,10 +100,14 @@ const Player: React.FC<PlayerProps> = ({
       {/* Desktop Player */}
       <div className="hidden md:flex h-[90px] items-center px-6">
         <div className="flex items-center w-1/3">
-          <img 
-            src={musics[currentTrack]?.coverUrl} 
-            alt={musics[currentTrack]?.title} 
-            className="w-[60px] h-[60px] rounded-lg mr-4 object-cover shadow-lg transition-transform duration-300 hover:scale-105"
+          <img
+            src={musics[currentTrack]?.coverUrl}
+            alt={musics[currentTrack]?.title}
+            className="w-[60px] h-[60px] rounded-lg mr-4 object-cover shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer"
+            onClick={() => {
+              setSelectedTrack(currentTrack);
+              setModalOpen(true);
+            }}
           />
           <div className="overflow-hidden">
             <h3 className="text-sm font-medium truncate">{musics[currentTrack]?.title}</h3>
@@ -103,7 +117,7 @@ const Player: React.FC<PlayerProps> = ({
 
         <div className="flex flex-col items-center justify-center w-1/3">
           <div className="flex items-center mb-2">
-            <button 
+            <button
               className={`bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-3 transition-all hover:text-blue-500 hover:scale-110 ${shuffle ? 'text-blue-500' : ''}`}
               onClick={() => setShuffle(!shuffle)}
             >
@@ -118,7 +132,7 @@ const Player: React.FC<PlayerProps> = ({
             <button className="bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-3 transition-all hover:text-blue-500 hover:scale-110" onClick={handleNext}>
               <FontAwesomeIcon icon={faStepForward} />
             </button>
-            <button 
+            <button
               className={`bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-3 transition-all hover:text-blue-500 hover:scale-110 ${repeat ? 'text-blue-500' : ''}`}
               onClick={() => setRepeat(!repeat)}
             >
@@ -147,7 +161,7 @@ const Player: React.FC<PlayerProps> = ({
           <button className="bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-2 transition-all hover:text-blue-500 hover:scale-110">
             <FontAwesomeIcon icon={faHeart} />
           </button>
-          <button 
+          <button
             className="bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-2 transition-all hover:text-blue-500 hover:scale-110"
             onClick={() => {
               if (musics[currentTrack]?.audioUrl) {

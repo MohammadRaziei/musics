@@ -1,12 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
+import React, { useState } from 'react';
+import MusicModal from './MusicModal';
 
 interface Track {
   title: string;
   artist: string;
   coverUrl: string;
   audioUrl: string;
+  album?: string;
 }
 
 interface Playlist {
@@ -19,14 +21,46 @@ interface MusicGridProps {
   playlists: Playlist[];
   musics: Track[];
   playTrack: (index: number) => void;
+  currentTrack: number;
+  isPlaying: boolean;
+  handlePlayPause: () => void;
+  handleNext: () => void;
+  handlePrevious: () => void;
+  currentTime: number;
+  duration: number;
 }
 
 const MusicGrid: React.FC<MusicGridProps> = ({ 
   selectedPlaylist, 
   playlists, 
   musics, 
-  playTrack 
+  playTrack,
+  currentTrack,
+  isPlaying,
+  handlePlayPause,
+  handleNext,
+  handlePrevious,
+  currentTime,
+  duration
 }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
+
+  const handleTrackClick = (index: number) => {
+    setSelectedTrack(index);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handlePlayInModal = () => {
+    if (selectedTrack !== null) {
+      playTrack(selectedTrack);
+    }
+  };
+
   return (
     <div className="flex-1 p-4 md:p-6 overflow-y-auto">
       <div className="mb-6 pb-3 border-b border-white border-opacity-10">
@@ -43,7 +77,7 @@ const MusicGrid: React.FC<MusicGridProps> = ({
           <div key={index} className="bg-white bg-opacity-5 rounded-xl overflow-hidden card-hover">
             <div 
               className="relative w-full pt-[100%] cursor-pointer"
-              onClick={() => playTrack(track.originalIndex)}
+              onClick={() => handleTrackClick(track.originalIndex)}
             >
               <img 
                 src={track.coverUrl} 
@@ -61,6 +95,20 @@ const MusicGrid: React.FC<MusicGridProps> = ({
           </div>
         ))}
       </div>
+
+      {/* Music Modal */}
+      <MusicModal 
+        track={selectedTrack !== null ? musics[selectedTrack] : null}
+        isOpen={modalOpen}
+        onClose={handleCloseModal}
+        onPlay={handlePlayInModal}
+        onPause={handlePlayPause}
+        onNext={handleNext}
+        onPrevious={handlePrevious}
+        isPlaying={isPlaying && selectedTrack === currentTrack}
+        currentTime={currentTime}
+        duration={duration}
+      />
     </div>
   );
 };

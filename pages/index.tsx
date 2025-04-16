@@ -37,6 +37,8 @@ export default function Home() {
   const [repeat, setRepeat] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
 
   // Load playlists from localStorage on component mount
   useEffect(() => {
@@ -51,26 +53,26 @@ export default function Home() {
         localStorage.setItem('mrMusicPlaylists', JSON.stringify(defaultPlaylists));
       }
     }
-    
+
     // Initialize audio element
     const audio = new Audio();
     audio.src = musics[currentTrack]?.audioUrl || '';
     audio.volume = volume;
-    
+
     // Add error handling for audio loading
     audio.addEventListener('error', (e) => {
       console.error("Audio error:", e);
       // alert(`Cannot play "${musics[currentTrack]?.title}". The audio format may not be supported or the resource is unavailable.`);
       setIsPlaying(false);
     });
-    
+
     setAudioElement(audio);
     setIsLoading(false);
-    
+
     return () => {
       if (audio) {
         audio.pause();
-        audio.removeEventListener('error', () => {});
+        audio.removeEventListener('error', () => { });
       }
     };
   }, []);
@@ -178,7 +180,7 @@ export default function Home() {
 
   const createNewPlaylist = () => {
     if (!newPlaylistName.trim()) return;
-    
+
     const updatedPlaylists = [...playlists, { name: newPlaylistName, tracks: [] }];
     setPlaylists(updatedPlaylists);
     localStorage.setItem('mrMusicPlaylists', JSON.stringify(updatedPlaylists));
@@ -201,12 +203,12 @@ export default function Home() {
       name: playlist.name,
       tracks: playlist.tracks.map(index => musics[index])
     };
-    
+
     const dataStr = JSON.stringify(playlistData, null, 2);
     const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(dataStr)}`;
-    
+
     const exportFileDefaultName = `${playlist.name.replace(/\s+/g, '_')}.json`;
-    
+
     const linkElement = document.createElement('a');
     linkElement.setAttribute('href', dataUri);
     linkElement.setAttribute('download', exportFileDefaultName);
@@ -238,10 +240,10 @@ export default function Home() {
           {/* Mobile Header */}
           <div className="md:hidden flex items-center justify-between p-4 border-b border-white border-opacity-10">
             <div className="flex items-center">
-              <img 
-                src="https://github.com/MohammadRaziei/mohammadraziei.github.io/raw/main/src/images/logo.svg" 
-                alt="MR Music Logo" 
-                className="w-8 h-8" 
+              <img
+                src="https://github.com/MohammadRaziei/mohammadraziei.github.io/raw/main/src/images/logo.svg"
+                alt="MR Music Logo"
+                className="w-8 h-8"
               />
               <h1 className="ml-3 text-lg font-bold text-blue-500">MR Music</h1>
             </div>
@@ -252,7 +254,7 @@ export default function Home() {
             {/* Mobile Sidebar (conditionally rendered) */}
             {isMobileMenuOpen && (
               <div className="md:hidden">
-                <Sidebar 
+                <Sidebar
                   playlists={playlists}
                   selectedPlaylist={selectedPlaylist}
                   setSelectedPlaylist={(index) => {
@@ -267,7 +269,7 @@ export default function Home() {
 
             {/* Desktop Sidebar (always visible on md+) */}
             <div className="hidden md:block">
-              <Sidebar 
+              <Sidebar
                 playlists={playlists}
                 selectedPlaylist={selectedPlaylist}
                 setSelectedPlaylist={setSelectedPlaylist}
@@ -277,16 +279,23 @@ export default function Home() {
             </div>
 
             {/* Content */}
-            <MusicGrid 
+            <MusicGrid
               selectedPlaylist={selectedPlaylist}
               playlists={playlists}
               musics={musics as Track[]}
               playTrack={playTrack}
+              currentTrack={currentTrack}
+              isPlaying={isPlaying}
+              handlePlayPause={handlePlayPause}
+              handleNext={handleNext}
+              handlePrevious={handlePrevious}
+              currentTime={currentTime}
+              duration={duration}
             />
           </div>
 
           {/* Player */}
-          <Player 
+          <Player
             currentTrack={currentTrack}
             isPlaying={isPlaying}
             duration={duration}
@@ -304,10 +313,12 @@ export default function Home() {
             setShuffle={setShuffle}
             setRepeat={setRepeat}
             addToPlaylist={addToPlaylist}
+            setModalOpen={setModalOpen}
+            setSelectedTrack={setSelectedTrack}
           />
 
           {/* Playlist Modal */}
-          <PlaylistModal 
+          <PlaylistModal
             showPlaylistModal={showPlaylistModal}
             playlists={playlists}
             newPlaylistName={newPlaylistName}
