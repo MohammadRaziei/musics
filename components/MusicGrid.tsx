@@ -61,6 +61,45 @@ const MusicGrid: React.FC<MusicGridProps> = ({
     }
   };
 
+  // New navigation functions
+  const handleNavigateNext = () => {
+    if (selectedTrack === null) return;
+    
+    // Get the list of tracks currently displayed in the grid
+    const displayedTracks = selectedPlaylist !== null
+      ? playlists[selectedPlaylist].tracks
+      : musics.map((_, i) => i);
+    
+    // Find the current track's position in the displayed tracks
+    const currentIndex = displayedTracks.indexOf(selectedTrack);
+    
+    // Navigate to the next track or loop back to the first
+    if (currentIndex < displayedTracks.length - 1) {
+      setSelectedTrack(displayedTracks[currentIndex + 1]);
+    } else {
+      setSelectedTrack(displayedTracks[0]);
+    }
+  };
+
+  const handleNavigatePrevious = () => {
+    if (selectedTrack === null) return;
+    
+    // Get the list of tracks currently displayed in the grid
+    const displayedTracks = selectedPlaylist !== null
+      ? playlists[selectedPlaylist].tracks
+      : musics.map((_, i) => i);
+    
+    // Find the current track's position in the displayed tracks
+    const currentIndex = displayedTracks.indexOf(selectedTrack);
+    
+    // Navigate to the previous track or loop back to the last
+    if (currentIndex > 0) {
+      setSelectedTrack(displayedTracks[currentIndex - 1]);
+    } else {
+      setSelectedTrack(displayedTracks[displayedTracks.length - 1]);
+    }
+  };
+
   return (
     <div className="flex-1 p-4 md:p-6 overflow-y-auto">
       <div className="mb-6 pb-3 border-b border-white border-opacity-10">
@@ -108,6 +147,8 @@ const MusicGrid: React.FC<MusicGridProps> = ({
         isPlaying={isPlaying && selectedTrack === currentTrack}
         currentTime={currentTime}
         duration={duration}
+        onNavigateNext={handleNavigateNext}
+        onNavigatePrevious={handleNavigatePrevious}
       />
     </div>
   );

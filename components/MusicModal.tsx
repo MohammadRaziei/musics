@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause, faStepForward, faStepBackward, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPause, faStepForward, faStepBackward, faTimes, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 interface Track {
   title: string;
@@ -21,6 +21,8 @@ interface MusicModalProps {
   isPlaying: boolean;
   currentTime: number;
   duration: number;
+  onNavigateNext?: () => void; // New prop for modal navigation
+  onNavigatePrevious?: () => void; // New prop for modal navigation
 }
 
 const MusicModal: React.FC<MusicModalProps> = ({
@@ -33,7 +35,9 @@ const MusicModal: React.FC<MusicModalProps> = ({
   onPrevious,
   isPlaying,
   currentTime,
-  duration
+  duration,
+  onNavigateNext,
+  onNavigatePrevious
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const [startY, setStartY] = useState<number | null>(null);
@@ -90,6 +94,27 @@ const MusicModal: React.FC<MusicModalProps> = ({
     setStartY(null);
   };
 
+  // Add keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!isOpen) return;
+      
+      if (event.key === 'ArrowLeft' && onNavigatePrevious) {
+        onNavigatePrevious();
+      } else if (event.key === 'ArrowRight' && onNavigateNext) {
+        onNavigateNext();
+      } else if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose, onNavigateNext, onNavigatePrevious]);
+
   if (!isOpen || !track) return null;
 
   const progressPercent = (currentTime / duration) * 100 || 0;
@@ -107,6 +132,29 @@ const MusicModal: React.FC<MusicModalProps> = ({
         onTouchEnd={handleTouchEnd}
       >
         <div className="relative">
+          {/* Navigation buttons */}
+          {onNavigatePrevious && (
+            <div className="absolute top-1/2 left-4 z-10 transform -translate-y-1/2">
+              <button 
+                onClick={onNavigatePrevious}
+                className="bg-black bg-opacity-50 rounded-full p-3 text-white hover:bg-opacity-70 transition-all"
+              >
+                <FontAwesomeIcon icon={faChevronLeft} />
+              </button>
+            </div>
+          )}
+          
+          {onNavigateNext && (
+            <div className="absolute top-1/2 right-4 z-10 transform -translate-y-1/2">
+              <button 
+                onClick={onNavigateNext}
+                className="bg-black bg-opacity-50 rounded-full p-3 text-white hover:bg-opacity-70 transition-all"
+              >
+                <FontAwesomeIcon icon={faChevronRight} />
+              </button>
+            </div>
+          )}
+          
           <div className="absolute top-4 right-4 z-10">
             <button 
               onClick={onClose}
