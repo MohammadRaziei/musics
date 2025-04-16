@@ -68,8 +68,9 @@ const MusicGrid: React.FC<MusicGridProps> = ({
 
   // New navigation functions
   const navigateToTrack = (targetIndex: number) => {
-    if (selectedTrack === null) return;
-    setSelectedTrack(displayedTracks[targetIndex % displayedTracks.length]);
+    if (displayedTracks.length === 0) return;
+    const safeIndex = ((targetIndex % displayedTracks.length) + displayedTracks.length) % displayedTracks.length;
+    setSelectedTrack(displayedTracks[safeIndex]);
   }
 
   // New navigation functions
@@ -136,8 +137,8 @@ const MusicGrid: React.FC<MusicGridProps> = ({
         onClose={handleCloseModal}
         onPlay={handlePlayInModal}
         onPause={handlePlayPause}
-        onNext={() => { handleNext(); navigateToTrack(currentTrack + 1); }}
-        onPrevious={() => { handlePrevious(); navigateToTrack(currentTrack - 1); }}
+        onNext={() => { handleNext(); navigateToTrack?.(currentTrack + 1); }}
+        onPrevious={() => { handlePrevious(); navigateToTrack?.(currentTrack - 1); }}
         isPlaying={isPlaying && selectedTrack === currentTrack}
         currentTime={currentTime}
         duration={duration}
