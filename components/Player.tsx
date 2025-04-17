@@ -79,9 +79,26 @@ const Player: React.FC<PlayerProps> = ({
               <p className="text-xs text-gray-400 truncate">{musics[currentTrack]?.artist}</p>
             </div>
           </div>
-          <button className="ml-2 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center" onClick={handlePlayPause}>
-            <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
-          </button>
+          <div className="flex items-center">
+            <button
+              className="bg-transparent border-none text-gray-300 text-lg cursor-pointer mx-1 transition-all hover:text-blue-500 hover:scale-110"
+              onClick={() => {
+                if (musics[currentTrack]?.audioUrl) {
+                  const link = document.createElement('a');
+                  link.href = musics[currentTrack].audioUrl;
+                  link.download = `${musics[currentTrack].artist} - ${musics[currentTrack].title}.mp3`;
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faDownload} />
+            </button>
+            <button className="ml-2 bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center" onClick={handlePlayPause}>
+              <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+            </button>
+          </div>
         </div>
 
         <div className="flex items-center w-full">
