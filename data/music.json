@@ -140,5 +140,14 @@
     "duration": 250,
     "coverUrl": "https://upload.wikimedia.org/wikipedia/en/5/5f/Bonnie_Tyler_Holding_a_Hero.jpg",
     "audioUrl": "https://ts5.tarafdari.com/contents/user403205/content-sound/240094_bonnie-tyler-holding-out-for-a-hero.mp3"
+  },
+  {
+    "id": 17,
+    "title": "Cheri Cheri Lady",
+    "artist": "Modern Talking",
+    "album": "Let's Talk About Love",
+    "duration": 215,
+    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/d/dd/Cheri_Cheri_Lady.jpg",
+    "audioUrl": "https://ts16.tarafdari.com/contents/user836235/content-sound/modern_talking_-_cheri_cheri_lady.mp3"
   }
 ]
