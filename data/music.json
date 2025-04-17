@@ -158,5 +158,14 @@
     "duration": 300,
     "coverUrl": "https://upload.wikimedia.org/wikipedia/en/1/10/Careless_Whisper_UK_single.jpg",
     "audioUrl": "https://ts18.tarafdari.com/contents/user791178/content-sound/8.mp3"
+  },
+  {
+    "id": 19,
+    "title": "Love Is Gone",
+    "artist": "Slander",
+    "album": "Love Is Gone - Single",
+    "duration": 210,
+    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/5/5b/David_Guetta-Love_Is_Gone.jpeg",
+    "audioUrl": "https://ts14.tarafdari.com/contents/user841539/content-sound/slander_love_is_gone_128.mp3"
   }
 ]
