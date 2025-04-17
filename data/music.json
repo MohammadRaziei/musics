@@ -149,5 +149,14 @@
     "duration": 215,
     "coverUrl": "https://upload.wikimedia.org/wikipedia/en/d/dd/Cheri_Cheri_Lady.jpg",
     "audioUrl": "https://ts16.tarafdari.com/contents/user836235/content-sound/modern_talking_-_cheri_cheri_lady.mp3"
+  },
+  {
+    "id": 18,
+    "title": "Careless Whisper",
+    "artist": "George Michael",
+    "album": "Make It Big",
+    "duration": 300,
+    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/1/10/Careless_Whisper_UK_single.jpg",
+    "audioUrl": "https://ts18.tarafdari.com/contents/user791178/content-sound/8.mp3"
   }
 ]
