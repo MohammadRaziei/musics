@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import MusicModal from './MusicModal';
+import { mod } from '../utils/mod'; // <-- add this import
 
 interface Track {
   title: string;
@@ -65,24 +66,22 @@ const MusicGrid: React.FC<MusicGridProps> = ({
     }
   };
 
-
-  // Auto-select currentTrack if modal is open but selectedTrack is null
-  // Remove or comment out this effect if you want the modal to always open with the clicked track
-  // React.useEffect(() => {
-  //   if (modalOpen && selectedTrack === null) {
-  //     setSelectedTrack(currentTrack);
-  //   }
-  // }, [modalOpen, selectedTrack, currentTrack]);
-
   // Get the list of tracks currently displayed in the grid
   const displayedTracks = selectedPlaylist !== null
-    ? playlists[selectedPlaylist].tracks
-    : musics.map((_, i) => i);
+  ? playlists[selectedPlaylist].tracks
+  : musics.map((_, i) => i);
+
+  React.useEffect(() => {
+    if (modalOpen && isPlaying && currentTime==0 && selectedTrack===mod(currentTrack-1, displayedTracks.length)) {
+      setSelectedTrack(currentTrack);
+    }
+  }, [currentTrack, modalOpen, currentTime, isPlaying, selectedTrack]);
+
 
   // New navigation functions
   const navigateToTrack = (targetIndex: number) => {
     if (displayedTracks.length === 0) return;
-    const safeIndex = ((targetIndex % displayedTracks.length) + displayedTracks.length) % displayedTracks.length;
+    const safeIndex = mod(targetIndex, displayedTracks.length); // <-- use the utility
     setSelectedTrack(displayedTracks[safeIndex]);
   }
 
