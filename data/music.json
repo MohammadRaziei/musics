@@ -131,5 +131,14 @@
     "duration": 241,
     "coverUrl": "https://upload.wikimedia.org/wikipedia/en/a/a0/Hozier_-_Hozier.png",
     "audioUrl": "https://ts9.tarafdari.com/contents/user751933/content-sound/hozier_-_take_me_to_church.mp3"
+  },
+  {
+    "id": 16,
+    "title": "Holding Out for a Hero",
+    "artist": "Bonnie Tyler",
+    "album": "Secret Dreams and Forbidden Fire",
+    "duration": 250,
+    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/5/5f/Bonnie_Tyler_Holding_a_Hero.jpg",
+    "audioUrl": "https://ts5.tarafdari.com/contents/user403205/content-sound/240094_bonnie-tyler-holding-out-for-a-hero.mp3"
   }
 ]
