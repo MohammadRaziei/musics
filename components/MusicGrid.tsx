@@ -104,7 +104,7 @@ const MusicGrid: React.FC<MusicGridProps> = ({
 
 
   return (
-    <div className="flex-1 p-4 md:p-6 overflow-y-auto">
+    <div className="flex-1 p-4 md:p-6 overflow-y-hidden">
       <div className="mb-6 pb-3 border-b border-white border-opacity-10">
         <h2 className="text-xl md:text-2xl font-semibold">
           {selectedPlaylist !== null ? playlists[selectedPlaylist].name : 'All Music'}
