@@ -92,7 +92,7 @@
     "id": 11,
     "title": "We Will Rock You",
     "artist": "Queen",
-    "coverUrl": "https://en.wikipedia.org/wiki/File:We_Will_Rock_You_by_Queen_(1977_French_single).png",
+    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/1/18/We_Will_Rock_You_by_Queen_%281977_French_single%29.png",
     "audioUrl": "https://ts14.tarafdari.com/contents/user791178/content-sound/we_will_rock_you.mp3",
     "album": "News of the World"
   },
@@ -102,7 +102,7 @@
     "artist": "Rihanna",
     "album": "Unapologetic",
     "duration": 230,
-    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/7/7e/Diamonds_-_Rihanna.png",
+    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/e/e8/Diamonds_-_Rihanna.png",
     "audioUrl": "https://ts17.tarafdari.com/contents/user893989/content-sound/rihanna_-_diamonds.mp3"
   }
 ]
