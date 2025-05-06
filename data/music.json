@@ -167,5 +167,32 @@
     "duration": 210,
     "coverUrl": "https://upload.wikimedia.org/wikipedia/en/5/5b/David_Guetta-Love_Is_Gone.jpeg",
     "audioUrl": "https://ts14.tarafdari.com/contents/user841539/content-sound/slander_love_is_gone_128.mp3"
+  },
+  {
+    "id": 20,
+    "title": "My Number One",
+    "artist": "Helena Paparizou",
+    "album": "My Number One",
+    "duration": 178,
+    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/2/22/Paparizou_my_number_one.jpg",
+    "audioUrl": "https://ts2.tarafdari.com/contents/user6984/content-sound/elena_paparizou_-_my_number_one.mp3"
+  },
+  {
+    "id": 21,
+    "title": "Cheap Thrills",
+    "artist": "Sia",
+    "album": "This Is Acting",
+    "duration": 210,
+    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/f/fc/Sia_Cheap_Thrills.png",
+    "audioUrl": "https://ts2.tarafdari.com/contents/user6984/content-sound/03._cheap_thrills.mp3"
+  },
+  {
+    "id": 22,
+    "title": "I Was Made for Lovin' You",
+    "artist": "Kiss",
+    "album": "Dynasty",
+    "duration": 270,
+    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/2/28/KISSIWasMadeForLovinYouFrench7InchSingleCover.jpg",
+    "audioUrl": "https://ts15.tarafdari.com/contents/user806512/content-sound/i_was_made_for_lovin_you_-_kiss.mp3"
   }
 ]
