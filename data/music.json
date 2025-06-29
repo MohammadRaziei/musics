@@ -218,5 +218,13 @@
     "album": "÷ (Divide)",
     "coverUrl": "https://qoret.com/wp-content/uploads/2021/02/ed-sheeran-perfect.jpg",
     "audioUrl": "https://ts15.tarafdari.com/contents/user687779/content-sound/perfect.mp3"
+  },
+  {
+    "id": 26,
+    "title": "Bang Bang",
+    "artist": "Dua Lipa",
+    "album": "Dua Lipa",
+    "coverUrl": "https://static.wikia.nocookie.net/dualipa/images/5/52/D460c379-ca72-4046-aa53-6272629e6a30_1024.jpg/revision/latest?cb=20221022134911",
+    "audioUrl": "https://ts9.tarafdari.com/contents/user698141/content-sound/dua-lipa-bang-bang-128.mp3"
   }
 ]
