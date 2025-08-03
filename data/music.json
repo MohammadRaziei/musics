@@ -226,5 +226,13 @@
     "album": "Dua Lipa",
     "coverUrl": "https://static.wikia.nocookie.net/dualipa/images/5/52/D460c379-ca72-4046-aa53-6272629e6a30_1024.jpg/revision/latest?cb=20221022134911",
     "audioUrl": "https://ts9.tarafdari.com/contents/user698141/content-sound/dua-lipa-bang-bang-128.mp3"
+  },
+  {
+    "id": 27,
+    "title": "Believer",
+    "artist": "Imagine Dragons",
+    "album": "Imagine Dragons",
+    "coverUrl": "https://upload.wikimedia.org/wikipedia/en/5/5c/Imagine-Dragons-Believer-art.jpg",
+    "audioUrl": "https://ts12.tarafdari.com/contents/user792487/content-sound/imagine_dragons_-_believer_128.mp3"
   }
 ]
